@@ -1,0 +1,10 @@
+@import "tailwindcss"; 
+
+*{
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.circle.active {
+    border-color: rgb(53, 53, 206);
+    color: rgb(53, 53, 206);
+}
