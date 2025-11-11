@@ -1,4 +1,5 @@
 
+
 const circles = document.querySelectorAll(".circle");
 const progressBar = document.querySelector(".indicator");
 const buttons = document.querySelectorAll("button");
@@ -206,7 +207,7 @@ function initQuillEditor() {
   if (quillEditor) {
     quillEditor = null;
   }
-  
+
   setTimeout(() => {
     const editorContainer = document.getElementById('summaryEditor');
     if (editorContainer) {
@@ -216,12 +217,12 @@ function initQuillEditor() {
         modules: {
           toolbar: [
             ['bold', 'italic', 'underline'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             ['clean']
           ]
         }
       });
-      
+
       if (userInformationCV.summary) {
         quillEditor.root.innerHTML = userInformationCV.summary;
       }
@@ -235,7 +236,7 @@ const collectPersonalInfo = () => {
   userInformationCV.email = document.getElementById('email')?.value || '';
   userInformationCV.telephone = document.getElementById('telephone')?.value || '';
   userInformationCV.adresse = document.getElementById('adresse')?.value || '';
-  
+
   if (quillEditor) {
     userInformationCV.summary = quillEditor.root.innerHTML;
   }
@@ -374,7 +375,7 @@ const rendrePersonnelInfos = () => {
           </form>
         </div>
       `;
-  
+
   initQuillEditor();
 };
 
@@ -384,7 +385,7 @@ const rendreProfessionnelInfos = () => {
           <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Informations Professionnelles</h2>
           <form class="space-y-8">
             <div>
-              <h3 class="text-xl font-semibold text-gray-800 mb-4">Hard Skills</h3>
+              <h3 class="text-xl font-semibold text-gray-800 mb-4">Technical Skills</h3>
               <div id="hardskillsContainer" class="space-y-3 mb-4">
                 <div class="input-group flex gap-2">
                   <input type="text" placeholder="Ex: JavaScript, Python..."
@@ -618,7 +619,7 @@ const rendreTemplateSelection = () => {
           </div>
         </div>
       `;
-  
+
   setTimeout(() => {
     const previewBtn = document.getElementById('previewBtn');
     if (previewBtn) {
@@ -648,99 +649,117 @@ const generateTemplateCards = () => {
       `).join('');
 };
 
-
-
 const generateElegantTemplate = () => {
   return `
-    <div id="cv-preview" class="bg-white shadow-xl max-w-4xl mx-auto my-8 text-gray-800 flex flex-col md:flex-row" style="min-height: 1000px;">
-      <!-- Sidebar -->
-      <div class="w-full md:w-1/3 bg-gray-100 p-6 flex-shrink-0">
-        ${userInformationCV.photo ? `<img src="${userInformationCV.photo}" alt="Photo" class="w-32 h-32 object-cover mb-6 border-4 border-gray-300 rounded-full mx-auto">` : ""}
-
-        <h2 class="text-lg font-bold text-gray-700 mb-3 uppercase border-b-2 border-gray-400 pb-2">Contact</h2>
-        <div class="space-y-2 text-sm mb-6 text-center md:text-left">
-          ${userInformationCV.email ? `<p>📧 ${userInformationCV.email}</p>` : ""}
-          ${userInformationCV.telephone ? `<p>📱 ${userInformationCV.telephone}</p>` : ""}
-          ${userInformationCV.adresse ? `<p>📍 ${userInformationCV.adresse}</p>` : ""}
-        </div>
-
-        ${userInformationCV.hardskills.length > 0 ? `
-          <div class="mb-6">
-            <h2 class="text-lg font-bold text-gray-700 mb-3 uppercase border-b-2 border-gray-400 pb-2">Hard Skills</h2>
-            <ul class="list-disc list-inside text-sm">
-              ${userInformationCV.hardskills.map(skill => `<li>${skill}</li>`).join('')}
-            </ul>
-          </div>
-        ` : ""}
-
-        ${userInformationCV.softskills.length > 0 ? `
-          <div class="mb-6">
-            <h2 class="text-lg font-bold text-gray-700 mb-3 uppercase border-b-2 border-gray-400 pb-2">Soft Skills</h2>
-            <ul class="list-disc list-inside text-sm">
-              ${userInformationCV.softskills.map(skill => `<li>${skill}</li>`).join('')}
-            </ul>
-          </div>
-        ` : ""}
-
-        ${userInformationCV.languages.length > 0 ? `
-          <div class="mb-6">
-            <h2 class="text-lg font-bold text-gray-700 mb-3 uppercase border-b-2 border-gray-400 pb-2">Langues</h2>
-            <ul class="list-disc list-inside text-sm">
-              ${userInformationCV.languages.map(lang => `<li>${lang.language} - ${lang.level}</li>`).join('')}
-            </ul>
-          </div>
-        ` : ""}
+    <div id="cv-preview" style="background-color: #ffffff; max-width: 210mm; margin: 0 auto; color: #2c3e50; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6;">
+      <!-- Header -->
+      <div style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 40px 50px; text-align: center;">
+        ${userInformationCV.photo ? `<img src="${userInformationCV.photo}" alt="Photo" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%; border: 4px solid white; margin-bottom: 20px;">` : ""}
+        ${userInformationCV.fullname ? `<h1 style="font-size: 32px; font-weight: 700; margin: 0 0 10px 0; letter-spacing: 1px;">${userInformationCV.fullname}</h1>` : ""}
+        ${userInformationCV.title ? `<p style="font-size: 18px; margin: 0; opacity: 0.95; font-weight: 300;">${userInformationCV.title}</p>` : ""}
       </div>
 
-      <!-- Main Content -->
-      <div class="w-full md:w-2/3 p-6">
-        ${userInformationCV.fullname ? `<h1 class="text-3xl font-bold text-gray-800 mb-2">${userInformationCV.fullname}</h1>` : ""}
-        ${userInformationCV.title ? `<h2 class="text-xl text-gray-600 mb-6">${userInformationCV.title}</h2>` : ""}
-        ${userInformationCV.summary ? `<div class="mb-6"><h2 class="text-lg font-bold text-gray-700 mb-2 uppercase border-b-2 border-gray-400 pb-1">Profil</h2>${userInformationCV.summary}</div>` : ""}
+      <!-- Contact Bar -->
+      <div style="background-color: #ecf0f1; padding: 15px 50px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; font-size: 14px; color: #2c3e50;">
+        ${userInformationCV.email ? `<span>✉ ${userInformationCV.email}</span>` : ""}
+        ${userInformationCV.telephone ? `<span>☎ ${userInformationCV.telephone}</span>` : ""}
+        ${userInformationCV.adresse ? `<span>⌂ ${userInformationCV.adresse}</span>` : ""}
+      </div>
 
-        ${userInformationCV.education.length > 0 ? `
-          <div class="mb-6">
-            <h2 class="text-lg font-bold text-gray-700 mb-3 uppercase border-b-2 border-gray-400 pb-2">Éducation</h2>
-            ${userInformationCV.education.map(edu => `
-              <div class="mb-2">
-                <p class="font-semibold">${edu.degree} - ${edu.institution}</p>
-                <p class="text-sm text-gray-600">${edu.startYear} - ${edu.endYear}</p>
-                ${edu.details ? `<p class="text-sm text-gray-700">${edu.details}</p>` : ""}
-              </div>
-            `).join('')}
+      <div style="padding: 40px 50px;">
+        <!-- Summary -->
+        ${userInformationCV.summary ? `
+          <div style="margin-bottom: 35px;">
+            <h2 style="font-size: 20px; font-weight: 600; color: #2c3e50; margin: 0 0 15px 0; padding-bottom: 8px; border-bottom: 3px solid #3498db; text-transform: uppercase; letter-spacing: 0.5px;">Profil Professionnel</h2>
+            <p style="font-size: 15px; color: #555; text-align: justify; margin: 0;">${userInformationCV.summary}</p>
           </div>
         ` : ""}
 
+        <!-- Experience -->
         ${userInformationCV.experience.length > 0 ? `
-          <div class="mb-6">
-            <h2 class="text-lg font-bold text-gray-700 mb-3 uppercase border-b-2 border-gray-400 pb-2">Expérience</h2>
+          <div style="margin-bottom: 35px;">
+            <h2 style="font-size: 20px; font-weight: 600; color: #2c3e50; margin: 0 0 20px 0; padding-bottom: 8px; border-bottom: 3px solid #3498db; text-transform: uppercase; letter-spacing: 0.5px;">Expérience Professionnelle</h2>
             ${userInformationCV.experience.map(exp => `
-              <div class="mb-2">
-                <p class="font-semibold">${exp.position} - ${exp.company}</p>
-                <p class="text-sm text-gray-600">${exp.startDate} - ${exp.endDate}</p>
-                ${exp.description ? `<p class="text-sm text-gray-700">${exp.description}</p>` : ""}
+              <div style="margin-bottom: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px;">
+                  <h3 style="font-size: 17px; font-weight: 600; color: #2c3e50; margin: 0;">${exp.position}</h3>
+                  <span style="font-size: 13px; color: #7f8c8d; font-style: italic;">${exp.startDate} - ${exp.endDate}</span>
+                </div>
+                <p style="font-size: 15px; color: #3498db; margin: 0 0 8px 0; font-weight: 500;">${exp.company}</p>
+                ${exp.description ? `<p style="font-size: 14px; color: #555; margin: 0; text-align: justify;">${exp.description}</p>` : ""}
               </div>
             `).join('')}
           </div>
         ` : ""}
 
-        ${userInformationCV.certifications.length > 0 ? `
-          <div class="mb-6">
-            <h2 class="text-lg font-bold text-gray-700 mb-3 uppercase border-b-2 border-gray-400 pb-2">Certifications</h2>
-            <ul class="list-disc list-inside text-sm">
-              ${userInformationCV.certifications.map(cert => `<li>${cert.title} - ${cert.issuer} (${cert.year})</li>`).join('')}
-            </ul>
+        <!-- Education -->
+        ${userInformationCV.education.length > 0 ? `
+          <div style="margin-bottom: 35px;">
+            <h2 style="font-size: 20px; font-weight: 600; color: #2c3e50; margin: 0 0 20px 0; padding-bottom: 8px; border-bottom: 3px solid #3498db; text-transform: uppercase; letter-spacing: 0.5px;">Formation</h2>
+            ${userInformationCV.education.map(edu => `
+              <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px;">
+                  <h3 style="font-size: 17px; font-weight: 600; color: #2c3e50; margin: 0;">${edu.degree}</h3>
+                  <span style="font-size: 13px; color: #7f8c8d; font-style: italic;">${edu.startYear} - ${edu.endYear}</span>
+                </div>
+                <p style="font-size: 15px; color: #3498db; margin: 0 0 5px 0; font-weight: 500;">${edu.institution}</p>
+                ${edu.details ? `<p style="font-size: 14px; color: #555; margin: 0;">${edu.details}</p>` : ""}
+              </div>
+            `).join('')}
           </div>
         ` : ""}
 
+        <!-- Skills Section -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 35px;">
+          ${userInformationCV.hardskills.length > 0 ? `
+            <div>
+              <h2 style="font-size: 20px; font-weight: 600; color: #2c3e50; margin: 0 0 15px 0; padding-bottom: 8px; border-bottom: 3px solid #3498db; text-transform: uppercase; letter-spacing: 0.5px;">Compétences Techniques</h2>
+              <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #555;">
+                ${userInformationCV.hardskills.map(skill => `<li style="margin-bottom: 8px;">${skill}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ""}
+
+          ${userInformationCV.softskills.length > 0 ? `
+            <div>
+              <h2 style="font-size: 20px; font-weight: 600; color: #2c3e50; margin: 0 0 15px 0; padding-bottom: 8px; border-bottom: 3px solid #3498db; text-transform: uppercase; letter-spacing: 0.5px;">Compétences Transversales</h2>
+              <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #555;">
+                ${userInformationCV.softskills.map(skill => `<li style="margin-bottom: 8px;">${skill}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ""}
+        </div>
+
+        <!-- Languages & Certifications -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 35px;">
+          ${userInformationCV.languages.length > 0 ? `
+            <div>
+              <h2 style="font-size: 20px; font-weight: 600; color: #2c3e50; margin: 0 0 15px 0; padding-bottom: 8px; border-bottom: 3px solid #3498db; text-transform: uppercase; letter-spacing: 0.5px;">Langues</h2>
+              <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #555;">
+                ${userInformationCV.languages.map(lang => `<li style="margin-bottom: 8px;"><strong>${lang.language}:</strong> ${lang.level}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ""}
+
+          ${userInformationCV.certifications.length > 0 ? `
+            <div>
+              <h2 style="font-size: 20px; font-weight: 600; color: #2c3e50; margin: 0 0 15px 0; padding-bottom: 8px; border-bottom: 3px solid #3498db; text-transform: uppercase; letter-spacing: 0.5px;">Certifications</h2>
+              <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #555;">
+                ${userInformationCV.certifications.map(cert => `<li style="margin-bottom: 8px;"><strong>${cert.title}</strong> - ${cert.issuer} (${cert.year})</li>`).join('')}
+              </ul>
+            </div>
+          ` : ""}
+        </div>
+
+        <!-- Projects -->
         ${userInformationCV.projects.length > 0 ? `
-          <div class="mb-6">
-            <h2 class="text-lg font-bold text-gray-700 mb-3 uppercase border-b-2 border-gray-400 pb-2">Projets</h2>
+          <div style="margin-bottom: 20px;">
+            <h2 style="font-size: 20px; font-weight: 600; color: #2c3e50; margin: 0 0 20px 0; padding-bottom: 8px; border-bottom: 3px solid #3498db; text-transform: uppercase; letter-spacing: 0.5px;">Projets Notables</h2>
             ${userInformationCV.projects.map(proj => `
-              <div class="mb-2">
-                <p class="font-semibold">${proj.name}${proj.link ? ` - <a href="${proj.link}" class="text-blue-600 underline" target="_blank">Lien</a>` : ""}</p>
-                ${proj.description ? `<p class="text-sm text-gray-700">${proj.description}</p>` : ""}
-                ${proj.technologies.length > 0 ? `<p class="text-sm text-gray-600">Technologies: ${proj.technologies.join(', ')}</p>` : ""}
+              <div style="margin-bottom: 20px;">
+                <h3 style="font-size: 17px; font-weight: 600; color: #2c3e50; margin: 0 0 5px 0;">${proj.name}${proj.link ? ` <a href="${proj.link}" style="color: #3498db; text-decoration: none; font-size: 14px;" target="_blank">↗</a>` : ""}</h3>
+                ${proj.description ? `<p style="font-size: 14px; color: #555; margin: 0 0 8px 0;">${proj.description}</p>` : ""}
+                ${proj.technologies.length > 0 ? `<p style="font-size: 13px; color: #7f8c8d; margin: 0;"><em>Technologies: ${proj.technologies.join(', ')}</em></p>` : ""}
               </div>
             `).join('')}
           </div>
@@ -749,129 +768,140 @@ const generateElegantTemplate = () => {
     </div>
   `;
 };
-
-
 
 const generateModernTemplate = () => {
   return `
-    <div id="cv-preview" class="bg-white shadow-2xl rounded-2xl p-12 max-w-4xl mx-auto my-8 text-gray-800 border border-gray-100">
-      <div class="text-center mb-8 pb-8 border-b-2 border-blue-500">
-        ${userInformationCV.photo ? `<img src="${userInformationCV.photo}" alt="Photo de profil" class="w-36 h-36 rounded-full object-cover mx-auto mb-6 border-4 border-blue-500 shadow-lg">` : ""}
-        <h1 class="text-4xl font-bold text-blue-700 mb-2">${userInformationCV.fullname || 'Votre Nom'}</h1>
-        <p class="text-2xl text-gray-600 font-medium mb-4">${userInformationCV.title || 'Votre Titre'}</p>
-        <div class="flex flex-wrap justify-center gap-6 text-gray-600 text-sm">
-          <p>📧 ${userInformationCV.email || ''}</p>
-          <p>📱 ${userInformationCV.telephone || ''}</p>
-          <p>📍 ${userInformationCV.adresse || ''}</p>
+    <div id="cv-preview" style="background-color: #ffffff; max-width: 210mm; margin: 0 auto; color: #333; font-family: 'Calibri', 'Arial', sans-serif; display: flex; min-height: 297mm;">
+      <!-- Left Sidebar -->
+      <div style="width: 35%; background-color: #1a1a2e; color: white; padding: 40px 30px;">
+        ${userInformationCV.photo ? `<img src="${userInformationCV.photo}" alt="Photo" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 5px solid #16213e; margin: 0 auto 30px; display: block;">` : ""}
+
+        <!-- Contact -->
+        <div style="margin-bottom: 35px;">
+          <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #0f3460; text-transform: uppercase; letter-spacing: 1px;">Contact</h2>
+          <div style="font-size: 13px; line-height: 2;">
+            ${userInformationCV.email ? `<p style="margin: 0 0 12px 0; word-break: break-all;"><strong>Email:</strong><br>${userInformationCV.email}</p>` : ""}
+            ${userInformationCV.telephone ? `<p style="margin: 0 0 12px 0;"><strong>Téléphone:</strong><br>${userInformationCV.telephone}</p>` : ""}
+            ${userInformationCV.adresse ? `<p style="margin: 0;"><strong>Adresse:</strong><br>${userInformationCV.adresse}</p>` : ""}
+          </div>
         </div>
-      </div>
 
-      ${userInformationCV.summary ? `
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-blue-600 mb-4 pb-2 border-b border-gray-200">Résumé</h2>
-        <div class="text-gray-700 leading-relaxed">${userInformationCV.summary}</div>
-      </section>` : ''}
+        <!-- Languages -->
+        ${userInformationCV.languages.length > 0 ? `
+          <div style="margin-bottom: 35px;">
+            <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #0f3460; text-transform: uppercase; letter-spacing: 1px;">Langues</h2>
+            ${userInformationCV.languages.map(lang => `
+              <div style="margin-bottom: 15px;">
+                <p style="margin: 0 0 5px 0; font-weight: 600; font-size: 14px;">${lang.language}</p>
+                <p style="margin: 0; font-size: 13px; opacity: 0.9;">${lang.level}</p>
+              </div>
+            `).join('')}
+          </div>
+        ` : ""}
 
-      <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <!-- Hard Skills -->
         ${userInformationCV.hardskills.length > 0 ? `
-        <section>
-          <h2 class="text-2xl font-bold text-blue-600 mb-4 pb-2 border-b border-gray-200">Compétences Techniques</h2>
-          <div class="flex flex-wrap gap-2">
-            ${userInformationCV.hardskills.map(skill => `<span class="px-4 py-2 bg-[#DBEAFE] text-[#1D4ED8] rounded-full text-sm font-medium">${skill}</span>`).join("")}
+          <div style="margin-bottom: 35px;">
+            <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #0f3460; text-transform: uppercase; letter-spacing: 1px;">Compétences</h2>
+            <ul style="margin: 0; padding-left: 20px; font-size: 13px; line-height: 1.8;">
+              ${userInformationCV.hardskills.map(skill => `<li style="margin-bottom: 8px;">${skill}</li>`).join('')}
+            </ul>
           </div>
-        </section>` : ''}
+        ` : ""}
 
+        <!-- Soft Skills -->
         ${userInformationCV.softskills.length > 0 ? `
-        <section>
-          <h2 class="text-2xl font-bold text-green-600 mb-4 pb-2 border-b border-gray-200">Soft Skills</h2>
-          <div class="flex flex-wrap gap-2">
-            ${userInformationCV.softskills.map(skill => `<span class="px-4 py-2 bg-[#DCFCE7] text-[#15803D] rounded-full text-sm font-medium">${skill}</span>`).join("")}
+          <div style="margin-bottom: 35px;">
+            <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #0f3460; text-transform: uppercase; letter-spacing: 1px;">Qualités</h2>
+            <ul style="margin: 0; padding-left: 20px; font-size: 13px; line-height: 1.8;">
+              ${userInformationCV.softskills.map(skill => `<li style="margin-bottom: 8px;">${skill}</li>`).join('')}
+            </ul>
           </div>
-        </section>` : ''}
+        ` : ""}
+
+        <!-- Certifications -->
+        ${userInformationCV.certifications.length > 0 ? `
+          <div style="margin-bottom: 35px;">
+            <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #0f3460; text-transform: uppercase; letter-spacing: 1px;">Certifications</h2>
+            ${userInformationCV.certifications.map(cert => `
+              <div style="margin-bottom: 15px; font-size: 13px;">
+                <p style="margin: 0 0 3px 0; font-weight: 600;">${cert.title}</p>
+                <p style="margin: 0; opacity: 0.9;">${cert.issuer} (${cert.year})</p>
+              </div>
+            `).join('')}
+          </div>
+        ` : ""}
       </div>
 
-      ${userInformationCV.languages.length > 0 ? `
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-blue-600 mb-4 pb-2 border-b border-gray-200">Langues</h2>
-        <ul class="grid md:grid-cols-3 gap-4">
-          ${userInformationCV.languages.map(lang => `
-            <li class="bg-[#F5F3FF] p-3 rounded-lg border border-[#EDE9FE]">
-              <span class="font-semibold text-gray-800">${lang.language}</span>
-              <span class="text-[#7C3AED] text-sm block mt-1">${lang.level}</span>
-            </li>
-          `).join("")}
-        </ul>
-      </section>` : ''}
+      <!-- Right Content -->
+      <div style="width: 65%; padding: 40px 50px; background-color: #ffffff;">
+        <!-- Header -->
+        <div style="margin-bottom: 35px;">
+          ${userInformationCV.fullname ? `<h1 style="font-size: 36px; font-weight: 700; color: #1a1a2e; margin: 0 0 10px 0; letter-spacing: -0.5px;">${userInformationCV.fullname}</h1>` : ""}
+          ${userInformationCV.title ? `<p style="font-size: 20px; color: #0f3460; margin: 0; font-weight: 500;">${userInformationCV.title}</p>` : ""}
+        </div>
 
-      ${userInformationCV.experience.length > 0 ? `
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-blue-600 mb-4 pb-2 border-b border-gray-200">Expériences Professionnelles</h2>
-        <div class="space-y-6">
-          ${userInformationCV.experience.map(exp => `
-            <div class="relative pl-8 border-l-4 border-[#2563EB]">
-              <div class="absolute w-4 h-4 bg-[#1D4ED8] rounded-full -left-2.5 top-1.5 ring-4 ring-white"></div>
-              <div style="background: linear-gradient(to right, #F9FAFB, #FFFFFF);" class="p-5 rounded-lg shadow-md">
-                <h3 class="text-xl font-bold text-gray-800 mb-1">${exp.position}</h3>
-                <p class="text-[#2563EB] font-semibold text-lg mb-1">${exp.company}</p>
-                <p class="text-sm text-gray-500 mb-3">${exp.startDate} → ${exp.endDate}</p>
-                <p class="text-gray-700 leading-relaxed">${exp.description}</p>
+        <!-- Summary -->
+        ${userInformationCV.summary ? `
+          <div style="margin-bottom: 35px; padding: 20px; background-color: #f8f9fa; border-left: 4px solid #0f3460;">
+            <h2 style="font-size: 18px; font-weight: 700; color: #1a1a2e; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 0.5px;">À Propos</h2>
+            <p style="font-size: 14px; color: #555; line-height: 1.7; margin: 0; text-align: justify;">${userInformationCV.summary}</p>
+          </div>
+        ` : ""}
+
+        <!-- Experience -->
+        ${userInformationCV.experience.length > 0 ? `
+          <div style="margin-bottom: 35px;">
+            <h2 style="font-size: 22px; font-weight: 700; color: #1a1a2e; margin: 0 0 25px 0; padding-bottom: 10px; border-bottom: 3px solid #0f3460; text-transform: uppercase; letter-spacing: 0.5px;">Expérience</h2>
+            ${userInformationCV.experience.map(exp => `
+              <div style="margin-bottom: 30px; position: relative; padding-left: 25px;">
+                <div style="position: absolute; left: 0; top: 8px; width: 10px; height: 10px; background-color: #0f3460; border-radius: 50%;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                  <h3 style="font-size: 18px; font-weight: 600; color: #1a1a2e; margin: 0;">${exp.position}</h3>
+                  <span style="font-size: 13px; color: #888; white-space: nowrap; margin-left: 15px;">${exp.startDate} - ${exp.endDate}</span>
+                </div>
+                <p style="font-size: 16px; color: #0f3460; margin: 0 0 10px 0; font-weight: 500;">${exp.company}</p>
+                ${exp.description ? `<p style="font-size: 14px; color: #555; line-height: 1.7; margin: 0; text-align: justify;">${exp.description}</p>` : ""}
               </div>
-            </div>
-          `).join("")}
-        </div>
-      </section>` : ''}
+            `).join('')}
+          </div>
+        ` : ""}
 
-      ${userInformationCV.education.length > 0 ? `
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-blue-600 mb-4 pb-2 border-b border-gray-200">Éducation</h2>
-        <div class="space-y-5">
-          ${userInformationCV.education.map(edu => `
-            <div style="background: linear-gradient(to right, #EFF6FF, #EEF2FF);" class="p-5 rounded-lg shadow-md border-l-4 border-[#6366F1]">
-              <h3 class="text-xl font-bold text-gray-800 mb-1">${edu.degree}</h3>
-              <p class="text-[#4F46E5] font-semibold text-lg mb-1">${edu.institution}</p>
-              <p class="text-sm text-gray-500 mb-2">${edu.startYear} → ${edu.endYear}</p>
-              <p class="text-gray-700 leading-relaxed">${edu.details}</p>
-            </div>
-          `).join("")}
-        </div>
-      </section>` : ''}
-
-      ${userInformationCV.projects.length > 0 ? `
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-blue-600 mb-4 pb-2 border-b border-gray-200">Projets</h2>
-        <div class="space-y-5">
-          ${userInformationCV.projects.map(proj => `
-            <div style="background: linear-gradient(to right, #F5F3FF, #FCE7F3);" class="p-5 rounded-lg shadow-md border border-[#EDE9FE]">
-              <div class="flex items-start justify-between mb-2">
-                <h3 class="text-xl font-bold text-gray-800">${proj.name}</h3>
-                ${proj.link ? `<a href="${proj.link}" class="text-[#2563EB]" target="_blank">🔗</a>` : ""}
+        <!-- Education -->
+        ${userInformationCV.education.length > 0 ? `
+          <div style="margin-bottom: 35px;">
+            <h2 style="font-size: 22px; font-weight: 700; color: #1a1a2e; margin: 0 0 25px 0; padding-bottom: 10px; border-bottom: 3px solid #0f3460; text-transform: uppercase; letter-spacing: 0.5px;">Formation</h2>
+            ${userInformationCV.education.map(edu => `
+              <div style="margin-bottom: 25px; position: relative; padding-left: 25px;">
+                <div style="position: absolute; left: 0; top: 8px; width: 10px; height: 10px; background-color: #0f3460; border-radius: 50%;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                  <h3 style="font-size: 18px; font-weight: 600; color: #1a1a2e; margin: 0;">${edu.degree}</h3>
+                  <span style="font-size: 13px; color: #888; white-space: nowrap; margin-left: 15px;">${edu.startYear} - ${edu.endYear}</span>
+                </div>
+                <p style="font-size: 16px; color: #0f3460; margin: 0 0 8px 0; font-weight: 500;">${edu.institution}</p>
+                ${edu.details ? `<p style="font-size: 14px; color: #555; margin: 0;">${edu.details}</p>` : ""}
               </div>
-              <p class="text-gray-700 leading-relaxed mb-3">${proj.description}</p>
-              <div class="flex flex-wrap gap-2">
-                ${proj.technologies.map(tech => `<span class="px-3 py-1 bg-white text-[#7C3AED] rounded-full text-xs font-medium border border-[#DDD6FE]">${tech}</span>`).join("")}
-              </div>
-            </div>
-          `).join("")}
-        </div>
-      </section>` : ''}
+            `).join('')}
+          </div>
+        ` : ""}
 
-      ${userInformationCV.certifications.length > 0 ? `
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-blue-600 mb-4 pb-2 border-b border-gray-200">Certifications</h2>
-        <div class="grid md:grid-cols-2 gap-4">
-          ${userInformationCV.certifications.map(cert => `
-            <div class="bg-[#FEF3C7] p-4 rounded-lg border border-[#FCD34D]">
-              <h3 class="font-bold text-gray-800">${cert.title}</h3>
-              <p class="text-gray-600 text-sm">${cert.issuer}</p>
-              <p class="text-gray-500 text-xs mt-1">${cert.year}</p>
-            </div>
-          `).join("")}
-        </div>
-      </section>` : ''}
+        <!-- Projects -->
+        ${userInformationCV.projects.length > 0 ? `
+          <div style="margin-bottom: 20px;">
+            <h2 style="font-size: 22px; font-weight: 700; color: #1a1a2e; margin: 0 0 25px 0; padding-bottom: 10px; border-bottom: 3px solid #0f3460; text-transform: uppercase; letter-spacing: 0.5px;">Projets</h2>
+            ${userInformationCV.projects.map(proj => `
+              <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 18px; font-weight: 600; color: #1a1a2e; margin: 0 0 8px 0;">${proj.name}${proj.link ? ` <a href="${proj.link}" style="color: #0f3460; text-decoration: none; font-size: 14px;" target="_blank">→</a>` : ""}</h3>
+                ${proj.description ? `<p style="font-size: 14px; color: #555; line-height: 1.7; margin: 0 0 10px 0;">${proj.description}</p>` : ""}
+                ${proj.technologies.length > 0 ? `<p style="font-size: 13px; color: #888; margin: 0;"><strong>Technologies:</strong> ${proj.technologies.join(' • ')}</p>` : ""}
+              </div>
+            `).join('')}
+          </div>
+        ` : ""}
+      </div>
     </div>
   `;
 };
-
 function generateCV() {
   collectCurrentStepData();
 
@@ -883,50 +913,128 @@ function generateCV() {
     default:
       cvHTML = generateModernTemplate();
   }
-
   cvHTML += `
-    <div class="text-center mt-8 mb-8">
-      <button id="downloadBtn" 
-              class="text-white px-8 py-4 rounded-xl bg-black bg-opacity-80 text-[#f1f1f1] text-lg font-bold shadow-xl transition-all duration-300 transform hover:scale-105">
-        <i class="fas fa-download mr-2"></i> Télécharger le CV en PDF
-      </button>
-    </div>
-  `;
+  <div style="text-align:center; margin: 2rem 0;">
+    <button id="downloadBtn"
+        style="
+          background-color: rgba(0, 0, 0, 0.8);
+          color: #ffffff;
+          padding: 1rem 2rem;
+          border-radius: 12px;
+          font-size: 1.125rem;
+          font-weight: 700;
+          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+          cursor: pointer;
+          border: none;
+          transition: transform 0.3s ease;
+        "
+        onmouseover="this.style.transform='scale(1.05)'"
+        onmouseout="this.style.transform='scale(1)'"
+    >
+      <i class="fas fa-download" style="margin-right: 8px;"></i> Télécharger le CV en PDF
+    </button>
+  </div>
+`;
 
   downloadSection.innerHTML = cvHTML;
   downloadSection.style.display = 'block';
 
+  const downloadBtn = document.getElementById("downloadBtn");
+  const cvpreview = document.getElementById('cv-preview');
 
-    const downloadBtn = document.getElementById("downloadBtn");
-    const cvpreview = document.getElementById('cv-preview');
+  if (downloadBtn && cvpreview) {
+    downloadBtn.addEventListener("click", async () => {
+      downloadBtn.disabled = true;
+      const originalText = downloadBtn.innerHTML;
+      downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i> Génération en cours...';
 
-    if (downloadBtn && cvpreview) {
-      downloadBtn.addEventListener("click", () => {
-        downloadBtn.disabled = true;
+      try {
+        const dataUrl = await domtoimage.toPng(cvpreview, {
+          quality: 1,
+          bgcolor: '#ffffff',
+          width: cvpreview.offsetWidth * 2,
+          height: cvpreview.offsetHeight * 2,
+          style: {
+            transform: 'scale(2)',
+            transformOrigin: 'top left'
+          }
+        });
 
-        const opt = {
-          margin: 0.5,
-          filename: `${userInformationCV.fullname || "mon_cv"}.pdf`,
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: {
-            scale: 2,
-            useCORS: true,
-            logging: false,
-            backgroundColor: '#ffffff'
-          },
-          jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
-        };
+        const img = new Image();
+        img.src = dataUrl;
 
-        html2pdf().set(opt).from(cvpreview).save()
-      });
-    }
+        await new Promise((resolve) => {
+          img.onload = resolve;
+        });
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'px',
+          format: 'a3',
+          compress: true
+        });
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        const imgWidth = pageWidth;
+        const imgHeight = (img.height * pageWidth) / img.width;
+
+        const totalPages = Math.ceil(imgHeight / pageHeight);
+
+        for (let i = 0; i < totalPages; i++) {
+          if (i > 0) {
+            pdf.addPage();
+          }
+
+          const yOffset = -i * pageHeight;
+          pdf.addImage(dataUrl, 'PNG', 0, yOffset, imgWidth, imgHeight, '', 'FAST');
+        }
+
+        pdf.save(`${userInformationCV.fullname || "mon_cv"}.pdf`);
+
+        downloadBtn.disabled = false;
+        downloadBtn.innerHTML = originalText;
+
+      } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert('Erreur lors de la génération du PDF. Veuillez réessayer.');
+
+        downloadBtn.disabled = false;
+        downloadBtn.innerHTML = originalText;
+      }
+    });
+  }
 }
 
 const updateSteps = (e) => {
   if (e.target.id === "next") {
+    let isValid = true;
+
+    switch (currentStep) {
+      case 1:
+        isValid = validatePersonalInfo();
+        break;
+      case 2:
+        isValid = validateProfessionalInfo();
+        break;
+      case 3:
+        isValid = validateLanguages();
+        break;
+      case 4:
+        isValid = validateExperiences();
+        break;
+    }
+
+    if (!isValid) {
+      return; 
+    }
+
     collectCurrentStepData();
     if (currentStep < circles.length) currentStep++;
   } else if (e.target.id === "prev" && currentStep > 1) {
+    collectCurrentStepData();
     currentStep--;
   }
 
@@ -983,6 +1091,99 @@ const Steps = () => {
 };
 
 
+function validatePersonalInfo() {
+  const fullName = document.getElementById("fullname")?.value.trim();
+  const title = document.getElementById("title")?.value.trim();
+  const email = document.getElementById("email")?.value.trim();
+  const tel = document.getElementById("telephone")?.value.trim();
+  const adresse = document.getElementById("adresse")?.value.trim();
+
+  if (!fullName || !title || !email || !tel || !adresse) {
+    alert("Veuillez remplir tous les champs obligatoires.");
+    return false;
+  }
+
+  if (!email.includes('@') || !email.includes('.')) {
+    alert("Veuillez entrer une adresse email valide.");
+    return false;
+  }
+
+  return true;
+}
+
+function validateProfessionalInfo() {
+  const hardskills = document.querySelectorAll('#hardskillsContainer input');
+  const educationGroups = document.querySelectorAll('.education-group');
+
+  let hasHardskill = false;
+  hardskills.forEach(input => {
+    if (input.value.trim()) hasHardskill = true;
+  });
+
+  let hasEducation = false;
+  educationGroups.forEach(group => {
+    const degree = group.querySelector('input[placeholder*="Licence"]');
+    if (degree?.value.trim()) hasEducation = true;
+  });
+
+  if (!hasHardskill) {
+    alert("Veuillez ajouter au moins une compétence technique.");
+    return false;
+  }
+
+  if (!hasEducation) {
+    alert("Veuillez ajouter au moins une formation.");
+    return false;
+  }
+
+  return true;
+}
+
+function validateLanguages() {
+  const softskills = document.querySelectorAll('#softskillsContainer input');
+  const languageGroups = document.querySelectorAll('.language-group');
+
+  let hasSoftskill = false;
+  softskills.forEach(input => {
+    if (input.value.trim()) hasSoftskill = true;
+  });
+
+  let hasLanguage = false;
+  languageGroups.forEach(group => {
+    const langInput = group.querySelector('input');
+    const levelSelect = group.querySelector('select');
+    if (langInput?.value.trim() && levelSelect?.value) hasLanguage = true;
+  });
+
+  if (!hasSoftskill) {
+    alert("Veuillez ajouter au moins une soft skill.");
+    return false;
+  }
+
+  if (!hasLanguage) {
+    alert("Veuillez ajouter au moins une langue avec son niveau.");
+    return false;
+  }
+
+  return true;
+}
+
+function validateExperiences() {
+  const experienceGroups = document.querySelectorAll('.experience-group');
+
+  let hasExperience = false;
+  experienceGroups.forEach(group => {
+    const position = group.querySelector('input[placeholder*="Développeur"]');
+    if (position?.value.trim()) hasExperience = true;
+  });
+
+  if (!hasExperience) {
+    alert("Veuillez ajouter au moins une expérience professionnelle.");
+    return false;
+  }
+
+  return true;
+}
 
 
 
