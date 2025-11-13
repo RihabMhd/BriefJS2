@@ -328,10 +328,22 @@ const collectExperiences = () => {
 //-----------------function pour le collect des donnees---------------
 const collectCurrentStepData = () => {
   switch (currentStep) {
-    case 1: collectPersonalInfo(); break;
-    case 2: collectProfessionalInfo(); break;
-    case 3: collectLanguages(); break;
-    case 4: collectExperiences(); break;
+    case 1:
+      collectPersonalInfo();
+      saveToLocalStorage();
+      break;
+    case 2:
+      collectProfessionalInfo();
+      saveToLocalStorage();
+      break;
+    case 3:
+      collectLanguages();
+      saveToLocalStorage();
+      break;
+    case 4:
+      collectExperiences();
+      saveToLocalStorage();
+      break;
   }
 };
 //-----------------function pour l'affichage des donnees---------------
@@ -655,7 +667,7 @@ const generateElegantTemplate = () => {
   return `
     <div id="cv-preview" style="background-color: #ffffff; max-width: 210mm; margin: 0 auto; color: #2c3e50; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6;">
       <!-- Header -->
-      <div style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 40px 50px; text-align: center;">
+      <div style="background-color: #1a1a2e; color: white; padding: 40px 50px; text-align: center;">
         ${userInformationCV.photo ? `<img src="${userInformationCV.photo}" alt="Photo" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%; border: 4px solid white; margin-bottom: 20px;">` : ""}
         ${userInformationCV.fullname ? `<h1 style="font-size: 32px; font-weight: 700; margin: 0 0 10px 0; letter-spacing: 1px;">${userInformationCV.fullname}</h1>` : ""}
         ${userInformationCV.title ? `<p style="font-size: 18px; margin: 0; opacity: 0.95; font-weight: 300;">${userInformationCV.title}</p>` : ""}
@@ -1037,22 +1049,29 @@ function generateCV() {
         const printWindow = window.open("", "", "width=800,height=600");
 
         printWindow.document.write(`
-      <html>
-        <head>
-          <title>Impression CV</title>
-          <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
-          <link rel="stylesheet" href="./assets/style.css">
-          <link rel="stylesheet" href="./assets/output.css">
-          <style>
-            body { margin: 0; padding: 20px; }
-            #cv-preview { width: 100%; }
-          </style>
-        </head>
-        <body>
-          ${cvpreview.outerHTML}
-        </body>
-      </html>
-    `);
+              <html>
+                <head>
+                  <title>Impression CV</title>
+                  <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+                  <link rel="stylesheet" href="./assets/style.css">
+                  <link rel="stylesheet" href="./assets/output.css">
+                  <style>
+                  @media print {
+                      * {
+                        -webkit-print-color-adjust: exact !important;
+                        print-color-adjust: exact !important;
+                        color-adjust: exact !important;
+                      }
+                    }
+                    body { margin: 0; padding: 20px; }
+                    #cv-preview { width: 100%; }
+                  </style>
+                </head>
+                <body>
+                  ${cvpreview.outerHTML}
+                </body>
+              </html>
+            `);
 
         printWindow.document.close();
 
@@ -1094,7 +1113,6 @@ const updateSteps = (e) => {
     }
 
     collectCurrentStepData();
-    saveToLocalStorage();
     if (currentStep < circles.length) currentStep++;
   } else if (e.target.id === "prev" && currentStep > 1) {
     collectCurrentStepData();
