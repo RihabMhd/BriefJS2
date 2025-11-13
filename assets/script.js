@@ -445,8 +445,8 @@ const rendrePersonnelInfos = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        preview.src = e.target.result;           
-        userInformationCV.photo = e.target.result; 
+        preview.src = e.target.result;
+        userInformationCV.photo = e.target.result;
       };
       reader.readAsDataURL(file);
     } else {
@@ -1352,17 +1352,28 @@ function validatePersonalInfo() {
   const adresse = document.getElementById("adresse")?.value.trim();
 
   if (!fullName || !title || !email || !tel || !adresse) {
-    alert("Veuillez remplir tous les champs obligatoires.");
+    Swal.fire({
+      icon: 'error',
+      title: 'Champs manquants',
+      text: 'Veuillez remplir tous les champs obligatoires.',
+      draggable: true
+    });
     return false;
   }
 
   if (!email.includes('@') || !email.includes('.')) {
-    alert("Veuillez entrer une adresse email valide.");
+    Swal.fire({
+      icon: 'error',
+      title: 'Email invalide',
+      text: 'Veuillez entrer une adresse email valide.',
+      draggable: true
+    });
     return false;
   }
 
   return true;
 }
+
 //-----------------function pour la validation---------------
 function validateProfessionalInfo() {
   const hardskills = document.querySelectorAll('#hardskillsContainer input');
@@ -1380,17 +1391,28 @@ function validateProfessionalInfo() {
   });
 
   if (!hasHardskill) {
-    alert("Veuillez ajouter au moins une compétence technique.");
+    Swal.fire({
+      icon: 'error',
+      title: 'Compétences techniques manquantes',
+      text: 'Veuillez ajouter au moins une compétence technique.',
+      draggable: true
+    });
     return false;
   }
 
   if (!hasEducation) {
-    alert("Veuillez ajouter au moins une formation.");
+    Swal.fire({
+      icon: 'error',
+      title: 'Formation manquante',
+      text: 'Veuillez ajouter au moins une formation.',
+      draggable: true
+    });
     return false;
   }
 
   return true;
 }
+
 //-----------------function pour la validation---------------
 function validateLanguages() {
   const softskills = document.querySelectorAll('#softskillsContainer input');
@@ -1409,17 +1431,28 @@ function validateLanguages() {
   });
 
   if (!hasSoftskill) {
-    alert("Veuillez ajouter au moins une soft skill.");
+    Swal.fire({
+      icon: 'error',
+      title: 'Soft skill manquante',
+      text: 'Veuillez ajouter au moins une soft skill.',
+      draggable: true
+    });
     return false;
   }
 
   if (!hasLanguage) {
-    alert("Veuillez ajouter au moins une langue avec son niveau.");
+    Swal.fire({
+      icon: 'error',
+      title: 'Langue manquante',
+      text: 'Veuillez ajouter au moins une langue avec son niveau.',
+      draggable: true
+    });
     return false;
   }
 
   return true;
 }
+
 //-----------------function pour la validation---------------
 function validateExperiences() {
   const experienceGroups = document.querySelectorAll('.experience-group');
@@ -1431,13 +1464,17 @@ function validateExperiences() {
   });
 
   if (!hasExperience) {
-    alert("Veuillez ajouter au moins une expérience professionnelle.");
+    Swal.fire({
+      icon: 'error',
+      title: 'Expérience manquante',
+      text: 'Veuillez ajouter au moins une expérience professionnelle.',
+      draggable: true
+    });
     return false;
   }
 
   return true;
 }
-
 
 
 
