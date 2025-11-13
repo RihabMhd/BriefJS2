@@ -1,19 +1,22 @@
-
-
+//-----------------Variable de progress Bar--------------------------------
 const circles = document.querySelectorAll(".circle");
 const progressBar = document.querySelector(".indicator");
 const buttons = document.querySelectorAll("button");
+//---------------Variable de l'affichage des formulaires--------------------
 const persInfos = document.querySelector(".persInfos");
 const profInfos = document.querySelector(".profInfos");
 const languages = document.querySelector('.languages');
 const experiences = document.querySelector(".experiences");
 const templateSelection = document.querySelector(".templateSelection");
 const downloadSection = document.querySelector(".downloadCV");
-
+//---------------Counteur de urls/steps--------------------
 let urlCounter = 0;
+let currentStep = 1;
+//---------------selecteur de template--------------------
 let selectedTemplate = 'modern';
+//---------------Quill JS--------------------
 let quillEditor = null;
-
+//---------------Objet userInformation--------------------
 const userInformationCV = {
   fullname: '',
   title: '',
@@ -32,8 +35,7 @@ const userInformationCV = {
   projects: []
 };
 
-let currentStep = 1;
-
+//---------------Function pour l'ajout d un input dans le formulaire de personnel information--------------------
 function addInput(containerId, placeholder = "Entrez votre texte") {
   const container = document.getElementById(containerId);
   const div = document.createElement('div');
@@ -46,7 +48,7 @@ function addInput(containerId, placeholder = "Entrez votre texte") {
       `;
   container.appendChild(div);
 }
-
+//---------------function pour l'ajout d un language champs dans la formulaire de language--------------------
 function addLanguageField() {
   const container = document.getElementById('languagesContainer');
   const div = document.createElement('div');
@@ -73,7 +75,7 @@ function addLanguageField() {
       `;
   container.appendChild(div);
 }
-
+//---------------function pour l'ajout d une experience champs dans la formulaire de profesionnel--------------------
 function addExperienceField() {
   const container = document.getElementById('experienceContainer');
   const div = document.createElement('div');
@@ -109,7 +111,7 @@ function addExperienceField() {
       `;
   container.appendChild(div);
 }
-
+//--------------function pour l'ajout d une certificat champs dans la formulaire de profesionnel--------------------
 function addCertificationField() {
   const container = document.getElementById('certificationsContainer');
   const div = document.createElement('div');
@@ -135,7 +137,7 @@ function addCertificationField() {
       `;
   container.appendChild(div);
 }
-
+//--------------function pour l'ajout d une certificat champs dans la formulaire de profesionnel--------------------
 function addProjectField() {
   const container = document.getElementById('projectsContainer');
   const div = document.createElement('div');
@@ -166,7 +168,7 @@ function addProjectField() {
       `;
   container.appendChild(div);
 }
-
+//--------------function pour l'ajout d un education champs dans la formulaire de profesionnel--------------------
 function addEducationField() {
   const container = document.getElementById('educationContainer');
   const div = document.createElement('div');
@@ -202,7 +204,7 @@ function addEducationField() {
       `;
   container.appendChild(div);
 }
-
+//--------------Quill JS-------------------
 function initQuillEditor() {
   if (quillEditor) {
     quillEditor = null;
@@ -229,7 +231,7 @@ function initQuillEditor() {
     }
   }, 100);
 }
-
+//-----------------function pour le collect des donnees---------------
 const collectPersonalInfo = () => {
   userInformationCV.fullname = document.getElementById('fullname')?.value || '';
   userInformationCV.title = document.getElementById('title')?.value || '';
@@ -250,7 +252,7 @@ const collectPersonalInfo = () => {
     reader.readAsDataURL(photoInput.files[0]);
   }
 };
-
+//-----------------function pour le collect des donnees---------------
 const collectProfessionalInfo = () => {
   userInformationCV.hardskills = [];
   document.querySelectorAll('#hardskillsContainer input').forEach(input => {
@@ -269,7 +271,7 @@ const collectProfessionalInfo = () => {
     });
   });
 };
-
+//-----------------function pour le collect des donnees---------------
 const collectLanguages = () => {
   userInformationCV.softskills = [];
   document.querySelectorAll('#softskillsContainer input').forEach(input => {
@@ -288,7 +290,7 @@ const collectLanguages = () => {
     }
   });
 };
-
+//-----------------function pour le collect des donnees---------------
 const collectExperiences = () => {
   userInformationCV.experience = [];
   document.querySelectorAll('.experience-group').forEach(group => {
@@ -323,7 +325,7 @@ const collectExperiences = () => {
     });
   });
 };
-
+//-----------------function pour le collect des donnees---------------
 const collectCurrentStepData = () => {
   switch (currentStep) {
     case 1: collectPersonalInfo(); break;
@@ -332,7 +334,7 @@ const collectCurrentStepData = () => {
     case 4: collectExperiences(); break;
   }
 };
-
+//-----------------function pour l'affichage des donnees---------------
 const rendrePersonnelInfos = () => {
   persInfos.innerHTML = `
         <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
@@ -378,7 +380,7 @@ const rendrePersonnelInfos = () => {
 
   initQuillEditor();
 };
-
+//-----------------function pour l'affichage des donnees---------------
 const rendreProfessionnelInfos = () => {
   profInfos.innerHTML = `
         <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
@@ -441,7 +443,7 @@ const rendreProfessionnelInfos = () => {
         </div>
       `;
 };
-
+//-----------------function pour l'affichage des donnees---------------
 const rendreLanguages = () => {
   languages.innerHTML = `
         <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
@@ -495,7 +497,7 @@ const rendreLanguages = () => {
         </div>
       `;
 };
-
+//-----------------function pour l'affichage des donnees---------------
 const rendreExperiences = () => {
   experiences.innerHTML = `
         <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
@@ -604,7 +606,7 @@ const rendreExperiences = () => {
         </div>
       `;
 };
-
+//-----------------function pour l'affichage des donnees---------------
 const rendreTemplateSelection = () => {
   templateSelection.innerHTML = `
         <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
@@ -627,7 +629,7 @@ const rendreTemplateSelection = () => {
     }
   }, 100);
 };
-
+//-----------------function pour l'affichage des donnees---------------
 const generateTemplateCards = () => {
   const templates = [
     { id: 'modern', name: 'Modern Blue', desc: 'Design moderne avec accent bleu', icon: '🎨' },
@@ -648,7 +650,7 @@ const generateTemplateCards = () => {
         </div>
       `).join('');
 };
-
+//-----------------function pour l'affichage des donnees---------------
 const generateElegantTemplate = () => {
   return `
     <div id="cv-preview" style="background-color: #ffffff; max-width: 210mm; margin: 0 auto; color: #2c3e50; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6;">
@@ -768,7 +770,7 @@ const generateElegantTemplate = () => {
     </div>
   `;
 };
-
+//-----------------function pour l'affichage des donnees---------------
 const generateModernTemplate = () => {
   return `
     <div id="cv-preview" style="background-color: #ffffff; max-width: 210mm; margin: 0 auto; color: #333; font-family: 'Calibri', 'Arial', sans-serif; display: flex; min-height: 297mm;">
@@ -902,6 +904,7 @@ const generateModernTemplate = () => {
     </div>
   `;
 };
+//-----------------function pour la generation de cv---------------
 function generateCV() {
   collectCurrentStepData();
 
@@ -914,7 +917,7 @@ function generateCV() {
       cvHTML = generateModernTemplate();
   }
   cvHTML += `
-  <div style="text-align:center; margin: 2rem 0;">
+  <div style="text-align:center; margin: 2rem 0;display:flex; justify-content:space-between">
     <button id="downloadBtn"
         style="
           background-color: rgba(0, 0, 0, 0.8);
@@ -933,6 +936,24 @@ function generateCV() {
     >
       <i class="fas fa-download" style="margin-right: 8px;"></i> Télécharger le CV en PDF
     </button>
+    <button id="ImprimerBtn"
+        style="
+          background-color: rgb(53, 53, 206);
+          color:#ffffff ;
+          padding: 1rem 2rem;
+          border-radius: 12px;
+          font-size: 1.125rem;
+          font-weight: 700;
+          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+          cursor: pointer;
+          border: none;
+          transition: transform 0.3s ease;
+        "
+        onmouseover="this.style.transform='scale(1.05)'"
+        onmouseout="this.style.transform='scale(1)'"
+    >
+      <i class="fas fa-download" style="margin-right: 8px;"></i> Imprimer le CV
+    </button>
   </div>
 `;
 
@@ -940,6 +961,7 @@ function generateCV() {
   downloadSection.style.display = 'block';
 
   const downloadBtn = document.getElementById("downloadBtn");
+  const ImprimerBtn = document.getElementById("ImprimerBtn");
   const cvpreview = document.getElementById('cv-preview');
 
   if (downloadBtn && cvpreview) {
@@ -1005,9 +1027,49 @@ function generateCV() {
         downloadBtn.innerHTML = originalText;
       }
     });
+    if (ImprimerBtn && cvpreview) {
+      ImprimerBtn.addEventListener('click', () => {
+
+        ImprimerBtn.disabled = true;
+        const originalText = ImprimerBtn.innerHTML;
+        ImprimerBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i> Préparation...';
+
+        const printWindow = window.open("", "", "width=800,height=600");
+
+        printWindow.document.write(`
+      <html>
+        <head>
+          <title>Impression CV</title>
+          <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+          <link rel="stylesheet" href="./assets/style.css">
+          <link rel="stylesheet" href="./assets/output.css">
+          <style>
+            body { margin: 0; padding: 20px; }
+            #cv-preview { width: 100%; }
+          </style>
+        </head>
+        <body>
+          ${cvpreview.outerHTML}
+        </body>
+      </html>
+    `);
+
+        printWindow.document.close();
+
+        printWindow.onload = () => {
+          printWindow.focus();
+          printWindow.print();
+          printWindow.close();
+          ImprimerBtn.disabled = false;
+          ImprimerBtn.innerHTML = originalText;
+        };
+      });
+    }
+
+
   }
 }
-
+//-----------------function pour l'update de steps---------------
 const updateSteps = (e) => {
   if (e.target.id === "next") {
     let isValid = true;
@@ -1028,10 +1090,11 @@ const updateSteps = (e) => {
     }
 
     if (!isValid) {
-      return; 
+      return;
     }
 
     collectCurrentStepData();
+    saveToLocalStorage();
     if (currentStep < circles.length) currentStep++;
   } else if (e.target.id === "prev" && currentStep > 1) {
     collectCurrentStepData();
@@ -1053,7 +1116,7 @@ const updateSteps = (e) => {
 
   Steps();
 };
-
+//-----------------function pour l'affichage des donnes dans quel step---------------
 const Steps = () => {
   persInfos.style.display = "none";
   profInfos.style.display = "none";
@@ -1090,7 +1153,7 @@ const Steps = () => {
   }
 };
 
-
+//-----------------function pour la validation---------------
 function validatePersonalInfo() {
   const fullName = document.getElementById("fullname")?.value.trim();
   const title = document.getElementById("title")?.value.trim();
@@ -1110,7 +1173,7 @@ function validatePersonalInfo() {
 
   return true;
 }
-
+//-----------------function pour la validation---------------
 function validateProfessionalInfo() {
   const hardskills = document.querySelectorAll('#hardskillsContainer input');
   const educationGroups = document.querySelectorAll('.education-group');
@@ -1138,7 +1201,7 @@ function validateProfessionalInfo() {
 
   return true;
 }
-
+//-----------------function pour la validation---------------
 function validateLanguages() {
   const softskills = document.querySelectorAll('#softskillsContainer input');
   const languageGroups = document.querySelectorAll('.language-group');
@@ -1167,7 +1230,7 @@ function validateLanguages() {
 
   return true;
 }
-
+//-----------------function pour la validation---------------
 function validateExperiences() {
   const experienceGroups = document.querySelectorAll('.experience-group');
 
@@ -1184,10 +1247,21 @@ function validateExperiences() {
 
   return true;
 }
-
-
+//---------localstorage-----------
+function saveToLocalStorage() {
+  localStorage.setItem("cvData", JSON.stringify(userInformationCV));
+}
+//---------localstorage-----------
+function loadFromLocalStorage() {
+  const saved = localStorage.getItem("cvData");
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    Object.assign(userInformationCV, parsed);
+  }
+}
 
 window.onload = () => {
+  loadFromLocalStorage();
   rendrePersonnelInfos();
   persInfos.style.display = "block";
 };
