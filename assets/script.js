@@ -65,7 +65,7 @@ function addInput(containerId, placeholder = "Entrez votre texte") {
           class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">✕</button>
       `;
   container.appendChild(div);
-}
+};
 //---------------function pour l'ajout d un language champs dans la formulaire de language--------------------
 function addLanguageField() {
   const container = document.getElementById('languagesContainer');
