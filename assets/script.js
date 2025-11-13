@@ -53,7 +53,19 @@ const userInformationCV = {
 
 
 
-
+//---------------Function pour l'ajout d un input dans le formulaire de personnel information--------------------
+function addInput(containerId, placeholder = "Entrez votre texte") {
+  const container = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = 'input-group flex gap-2';
+  div.innerHTML = `
+        <input type="text" placeholder="${placeholder}"
+          class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+        <button type="button" onclick="this.parentElement.remove()" 
+          class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">✕</button>
+      `;
+  container.appendChild(div);
+}
 //---------------function pour l'ajout d un language champs dans la formulaire de language--------------------
 function addLanguageField() {
   const container = document.getElementById('languagesContainer');
