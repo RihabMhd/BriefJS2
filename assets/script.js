@@ -431,65 +431,88 @@ const rendrePersonnelInfos = () => {
 //-----------------function pour l'affichage des donnees---------------
 const rendreProfessionnelInfos = () => {
   profInfos.innerHTML = `
-        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-          <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Informations Professionnelles</h2>
-          <form class="space-y-8">
-            <div>
-              <h3 class="text-xl font-semibold text-gray-800 mb-4">Technical Skills</h3>
-              <div id="hardskillsContainer" class="space-y-3 mb-4">
-                <div class="input-group flex gap-2">
-                  <input type="text" placeholder="Ex: JavaScript, Python..."
-                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  <button type="button" onclick="this.parentElement.remove()" 
-                    class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">✕</button>
-                </div>
-              </div>
-              <button type="button" onclick="addInput('hardskillsContainer', 'Ex: JavaScript, Python...')" 
-                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                <i class="fa-solid fa-plus"></i> Ajouter une compétence
-              </button>
-            </div>
-            <div>
-              <h3 class="text-xl font-semibold text-gray-800 mb-4">Éducation</h3>
-              <div id="educationContainer" class="space-y-4 mb-4">
-                <div class="education-group p-4 bg-gray-50 rounded-lg space-y-3 relative">
-                  <button type="button" onclick="this.parentElement.remove()" 
-                    class="absolute top-2 right-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm">✕</button>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Diplôme</label>
-                    <input type="text" placeholder="Ex: Licence en Informatique" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Institution</label>
-                    <input type="text" placeholder="Ex: Université Mohammed V" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Année de début</label>
-                    <input type="text" placeholder="Ex: 2018" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Année de fin</label>
-                    <input type="text" placeholder="Ex: 2021" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Détails (optionnel)</label>
-                    <textarea placeholder="Ex: Mention Bien..." 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="2"></textarea>
-                  </div>
-                </div>
-              </div>
-              <button type="button" onclick="addEducationField()" 
-                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                <i class="fa-solid fa-plus"></i> Ajouter une formation
-              </button>
-            </div>
-          </form>
+    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Informations Professionnelles</h2>
+      <form class="space-y-8">
+        <div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Technical Skills</h3>
+          <div id="hardskillsContainer" class="space-y-3 mb-4"></div>
+          <button type="button" onclick="addInput('hardskillsContainer', 'Ex: JavaScript, Python...')" 
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+            <i class="fa-solid fa-plus"></i> Ajouter une compétence
+          </button>
         </div>
-      `;
+
+        <div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Éducation</h3>
+          <div id="educationContainer" class="space-y-4 mb-4"></div>
+          <button type="button" onclick="addEducationField()" 
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+            <i class="fa-solid fa-plus"></i> Ajouter une formation
+          </button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  // -----------------------
+  // Recharger les Hard Skills
+  // -----------------------
+  const hardskillsContainer = document.getElementById('hardskillsContainer');
+  hardskillsContainer.innerHTML = '';
+
+  userInformationCV.hardskills.forEach(skill => {
+    const div = document.createElement('div');
+    div.className = 'input-group flex gap-2';
+    div.innerHTML = `
+      <input type="text" value="${skill}" 
+        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+      <button type="button" onclick="this.parentElement.remove()" 
+        class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">✕</button>
+    `;
+    hardskillsContainer.appendChild(div);
+  });
+
+  // -----------------------
+  // Recharger l'Éducation
+  // -----------------------
+  const educationContainer = document.getElementById('educationContainer');
+  educationContainer.innerHTML = '';
+
+  userInformationCV.education.forEach(edu => {
+    const div = document.createElement('div');
+    div.className = 'education-group p-4 bg-gray-50 rounded-lg space-y-3 relative';
+    div.innerHTML = `
+      <button type="button" onclick="this.parentElement.remove()" 
+        class="absolute top-2 right-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm">✕</button>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Diplôme</label>
+        <input type="text" value="${edu.degree || ''}" placeholder="Ex: Licence en Informatique" 
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Institution</label>
+        <input type="text" value="${edu.institution || ''}" placeholder="Ex: Université Mohammed V" 
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Année de début</label>
+        <input type="text" value="${edu.startYear || ''}" placeholder="Ex: 2018" 
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Année de fin</label>
+        <input type="text" value="${edu.endYear || ''}" placeholder="Ex: 2021" 
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Détails (optionnel)</label>
+        <textarea placeholder="Ex: Mention Bien..." 
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="2">${edu.details || ''}</textarea>
+      </div>
+    `;
+    educationContainer.appendChild(div);
+  });
 };
 //-----------------function pour l'affichage des donnees---------------
 const rendreLanguages = () => {
@@ -498,44 +521,27 @@ const rendreLanguages = () => {
           <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Langues & Soft Skills</h2>
           <form class="space-y-8">
             <div>
+
               <h3 class="text-xl font-semibold text-gray-800 mb-4">Soft Skills</h3>
+
               <div id="softskillsContainer" class="space-y-3 mb-4">
-                <div class="input-group flex gap-2">
-                  <input type="text" placeholder="Ex: Communication, Leadership..."
-                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  <button type="button" onclick="this.parentElement.remove()" 
-                    class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">✕</button>
-                </div>
               </div>
+
               <button type="button" onclick="addInput('softskillsContainer', 'Ex: Communication, Leadership...')" 
                 class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
                 <i class="fa-solid fa-plus"></i> Ajouter une compétence
               </button>
+
+
             </div>
             <div>
+
               <h3 class="text-xl font-semibold text-gray-800 mb-4">Langues</h3>
+
               <div id="languagesContainer" class="space-y-4 mb-4">
-                <div class="language-group p-4 bg-gray-50 rounded-lg space-y-3 relative">
-                  <button type="button" onclick="this.parentElement.remove()" 
-                    class="absolute top-2 right-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm">✕</button>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Langue</label>
-                    <input type="text" placeholder="Ex: Français, Anglais..." 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Niveau</label>
-                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                      <option value="">Sélectionnez un niveau</option>
-                      <option value="Débutant">Débutant</option>
-                      <option value="Intermédiaire">Intermédiaire</option>
-                      <option value="Avancé">Avancé</option>
-                      <option value="Courant">Courant</option>
-                      <option value="Langue maternelle">Langue maternelle</option>
-                    </select>
-                  </div>
-                </div>
               </div>
+
+            </div>
               <button type="button" onclick="addLanguageField()" 
                 class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
                 <i class="fa-solid fa-plus"></i> Ajouter une langue
@@ -544,116 +550,195 @@ const rendreLanguages = () => {
           </form>
         </div>
       `;
+  const softskillsContainer = document.getElementById('softskillsContainer');
+  softskillsContainer.innerHTML = '';
+  userInformationCV.softskills.forEach(skill => {
+    const div = document.createElement('div');
+    div.className = 'input-group flex gap-2';
+    div.innerHTML = `
+    <input type="text" value="${skill}" 
+      class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+    <button type="button" onclick="this.parentElement.remove()" 
+      class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">✕</button>
+  `;
+    softskillsContainer.appendChild(div);
+  });
+
+  const languagesContainer = document.getElementById('languagesContainer');
+  languagesContainer.innerHTML = '';
+  userInformationCV.languages.forEach(lang => {
+    const div = document.createElement('div');
+    div.className = 'language-group p-4 bg-gray-50 rounded-lg space-y-3 relative';
+    div.innerHTML = `
+    <button type="button" onclick="this.parentElement.remove()" 
+      class="absolute top-2 right-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm">✕</button>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Langue</label>
+      <input type="text" value="${lang.language}" 
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Niveau</label>
+      <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <option value="">Sélectionnez un niveau</option>
+        <option value="Débutant" ${lang.level === 'Débutant' ? 'selected' : ''}>Débutant</option>
+        <option value="Intermédiaire" ${lang.level === 'Intermédiaire' ? 'selected' : ''}>Intermédiaire</option>
+        <option value="Avancé" ${lang.level === 'Avancé' ? 'selected' : ''}>Avancé</option>
+        <option value="Courant" ${lang.level === 'Courant' ? 'selected' : ''}>Courant</option>
+        <option value="Langue maternelle" ${lang.level === 'Langue maternelle' ? 'selected' : ''}>Langue maternelle</option>
+      </select>
+    </div>
+  `;
+    languagesContainer.appendChild(div);
+  });
+
 };
 //-----------------function pour l'affichage des donnees---------------
 const rendreExperiences = () => {
   experiences.innerHTML = `
-        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-          <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Expériences & Réalisations</h2>
-          <form class="space-y-8">
-            <div>
-              <h3 class="text-xl font-semibold text-gray-800 mb-4">Expérience Professionnelle</h3>
-              <div id="experienceContainer" class="space-y-4 mb-4">
-                <div class="experience-group p-4 bg-gray-50 rounded-lg space-y-3 relative">
-                  <button type="button" onclick="this.parentElement.remove()" 
-                    class="absolute top-2 right-2 py-1 px-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm">✕</button>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Poste</label>
-                    <input type="text" placeholder="Ex: Développeur Full Stack" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Entreprise</label>
-                    <input type="text" placeholder="Ex: ABC Technologies" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Date de début</label>
-                    <input type="text" placeholder="Ex: Janvier 2020" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Date de fin</label>
-                    <input type="text" placeholder="Ex: Décembre 2022 ou Présent" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                    <textarea placeholder="Décrivez vos responsabilités..." 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="3"></textarea>
-                  </div>
-                </div>
-              </div>
-              <button type="button" onclick="addExperienceField()" 
-                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                <i class="fa-solid fa-plus"></i> Ajouter une expérience
-              </button>
-            </div>
-            <div>
-              <h3 class="text-xl font-semibold text-gray-800 mb-4">Certifications</h3>
-              <div id="certificationsContainer" class="space-y-4 mb-4">
-                <div class="certification-group p-4 bg-gray-50 rounded-lg space-y-3 relative">
-                  <button type="button" onclick="this.parentElement.remove()" 
-                    class="absolute top-2 right-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm">✕</button>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Titre</label>
-                    <input type="text" placeholder="Ex: AWS Certified" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Émetteur</label>
-                    <input type="text" placeholder="Ex: Amazon" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Année</label>
-                    <input type="text" placeholder="2024" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                </div>
-              </div>
-              <button type="button" onclick="addCertificationField()" 
-                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                <i class="fa-solid fa-plus"></i> Ajouter une certification
-              </button>
-            </div>
-            <div>
-              <h3 class="text-xl font-semibold text-gray-800 mb-4">Projets</h3>
-              <div id="projectsContainer" class="space-y-4 mb-4">
-                <div class="project-group p-4 bg-gray-50 rounded-lg space-y-3 relative">
-                  <button type="button" onclick="this.parentElement.remove()" 
-                    class="absolute top-2 right-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm">✕</button>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nom du projet</label>
-                    <input type="text" placeholder="Ex: Application E-commerce" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Lien (optionnel)</label>
-                    <input type="url" placeholder="https://mon-projet.com" 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                    <textarea placeholder="Décrivez le projet..." 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="2"></textarea>
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Technologies utilisées</label>
-                    <input type="text" placeholder="Ex: React, Node.js..." 
-                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                  </div>
-                </div>
-              </div>
-              <button type="button" onclick="addProjectField()" 
-                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                <i class="fa-solid fa-plus"></i> Ajouter un projet
-              </button>
-            </div>
-          </form>
+    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Expériences & Réalisations</h2>
+      <form class="space-y-8">
+
+        <!-- Expériences professionnelles -->
+        <div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Expérience Professionnelle</h3>
+          <div id="experienceContainer" class="space-y-4 mb-4"></div>
+          <button type="button" onclick="addExperienceField()" 
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+            <i class="fa-solid fa-plus"></i> Ajouter une expérience
+          </button>
         </div>
-      `;
+
+        <!-- Certifications -->
+        <div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Certifications</h3>
+          <div id="certificationsContainer" class="space-y-4 mb-4"></div>
+          <button type="button" onclick="addCertificationField()" 
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+            <i class="fa-solid fa-plus"></i> Ajouter une certification
+          </button>
+        </div>
+
+        <!-- Projets -->
+        <div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Projets</h3>
+          <div id="projectsContainer" class="space-y-4 mb-4"></div>
+          <button type="button" onclick="addProjectField()" 
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+            <i class="fa-solid fa-plus"></i> Ajouter un projet
+          </button>
+        </div>
+
+      </form>
+    </div>
+  `;
+
+  const experienceContainer = document.getElementById('experienceContainer');
+  experienceContainer.innerHTML = '';
+
+  userInformationCV.experience.forEach(exp => {
+    const div = document.createElement('div');
+    div.className = 'experience-group p-4 bg-gray-50 rounded-lg space-y-3 relative';
+    div.innerHTML = `
+      <button type="button" onclick="this.parentElement.remove()" 
+        class="absolute top-2 right-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">✕</button>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Poste</label>
+        <input type="text" value="${exp.position || ''}" placeholder="Ex: Développeur Full Stack"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Entreprise</label>
+        <input type="text" value="${exp.company || ''}" placeholder="Ex: ABC Technologies"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div class="flex gap-4">
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Date de début</label>
+          <input type="text" value="${exp.startDate || ''}" placeholder="Ex: Janvier 2020"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Date de fin</label>
+          <input type="text" value="${exp.endDate || ''}" placeholder="Ex: Décembre 2022 ou Présent"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+        <textarea placeholder="Décrivez vos responsabilités..." rows="3"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">${exp.description || ''}</textarea>
+      </div>
+    `;
+    experienceContainer.appendChild(div);
+  });
+ 
+  const certificationsContainer = document.getElementById('certificationsContainer');
+  certificationsContainer.innerHTML = '';
+
+  userInformationCV.certifications.forEach(cert => {
+    const div = document.createElement('div');
+    div.className = 'certification-group p-4 bg-gray-50 rounded-lg space-y-3 relative';
+    div.innerHTML = `
+      <button type="button" onclick="this.parentElement.remove()" 
+        class="absolute top-2 right-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">✕</button>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Titre</label>
+        <input type="text" value="${cert.title || ''}" placeholder="Ex: AWS Certified"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Émetteur</label>
+        <input type="text" value="${cert.issuer || ''}" placeholder="Ex: Amazon"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Année</label>
+        <input type="text" value="${cert.year || ''}" placeholder="2024"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
+    `;
+    certificationsContainer.appendChild(div);
+  });
+ 
+  const projectsContainer = document.getElementById('projectsContainer');
+  projectsContainer.innerHTML = '';
+
+  userInformationCV.projects.forEach(proj => {
+    const div = document.createElement('div');
+    div.className = 'project-group p-4 bg-gray-50 rounded-lg space-y-3 relative';
+    div.innerHTML = `
+      <button type="button" onclick="this.parentElement.remove()" 
+        class="absolute top-2 right-2 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">✕</button>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Nom du projet</label>
+        <input type="text" value="${proj.name || ''}" placeholder="Ex: Application E-commerce"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Lien (optionnel)</label>
+        <input type="url" value="${proj.link || ''}" placeholder="https://mon-projet.com"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+        <textarea placeholder="Décrivez le projet..." rows="2"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">${proj.description || ''}</textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Technologies utilisées</label>
+        <input type="text" value="${proj.technologies || ''}" placeholder="Ex: React, Node.js..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+      </div>
+    `;
+    projectsContainer.appendChild(div);
+  });
 };
+
 //-----------------function pour l'affichage des donnees---------------
 const rendreTemplateSelection = () => {
   templateSelection.innerHTML = `
@@ -1347,7 +1432,7 @@ function loadFromLocalStorage() {
   }
 }
 //---------localstorage-----------
-function removeFromLocalStorage(){
+function removeFromLocalStorage() {
   localStorage.removeItem("cvData")
 }
 
