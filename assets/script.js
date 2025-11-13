@@ -2,6 +2,8 @@
 const circles = document.querySelectorAll(".circle");
 const progressBar = document.querySelector(".indicator");
 const buttons = document.querySelectorAll("button");
+
+
 //---------------Variable de l'affichage des formulaires--------------------
 const persInfos = document.querySelector(".persInfos");
 const profInfos = document.querySelector(".profInfos");
@@ -9,13 +11,26 @@ const languages = document.querySelector('.languages');
 const experiences = document.querySelector(".experiences");
 const templateSelection = document.querySelector(".templateSelection");
 const downloadSection = document.querySelector(".downloadCV");
+
+
 //---------------Counteur de urls/steps--------------------
 let urlCounter = 0;
 let currentStep = 1;
+
+
 //---------------selecteur de template--------------------
 let selectedTemplate = 'modern';
+
+
 //---------------Quill JS--------------------
 let quillEditor = null;
+
+
+
+
+
+
+
 //---------------Objet userInformation--------------------
 const userInformationCV = {
   fullname: '',
@@ -34,6 +49,11 @@ const userInformationCV = {
   certifications: [],
   projects: []
 };
+
+
+
+
+
 
 //---------------Function pour l'ajout d un input dans le formulaire de personnel information--------------------
 function addInput(containerId, placeholder = "Entrez votre texte") {
@@ -204,6 +224,14 @@ function addEducationField() {
       `;
   container.appendChild(div);
 }
+
+
+
+
+
+
+
+
 //--------------Quill JS-------------------
 function initQuillEditor() {
   if (quillEditor) {
@@ -346,6 +374,14 @@ const collectCurrentStepData = () => {
       break;
   }
 };
+
+
+
+
+
+
+
+
 //-----------------function pour l'affichage des donnees---------------
 const rendrePersonnelInfos = () => {
   persInfos.innerHTML = `
@@ -641,6 +677,13 @@ const rendreTemplateSelection = () => {
     }
   }, 100);
 };
+
+
+
+
+
+
+
 //-----------------function pour l'affichage des donnees---------------
 const generateTemplateCards = () => {
   const templates = [
@@ -995,6 +1038,7 @@ function generateCV() {
         });
 
         const img = new Image();
+
         img.src = dataUrl;
 
         await new Promise((resolve) => {
@@ -1002,6 +1046,7 @@ function generateCV() {
         });
 
         const { jsPDF } = window.jspdf;
+
         const pdf = new jsPDF({
           orientation: 'portrait',
           unit: 'px',
@@ -1088,6 +1133,14 @@ function generateCV() {
 
   }
 }
+
+
+
+
+
+
+
+
 //-----------------function pour l'update de steps---------------
 const updateSteps = (e) => {
   if (e.target.id === "next") {
@@ -1146,22 +1199,27 @@ const Steps = () => {
   switch (currentStep) {
     case 1:
       rendrePersonnelInfos();
+      loadFromLocalStorage();
       persInfos.style.display = "block";
       break;
     case 2:
       rendreProfessionnelInfos();
+      loadFromLocalStorage();
       profInfos.style.display = "block";
       break;
     case 3:
       rendreLanguages();
+      loadFromLocalStorage();
       languages.style.display = "block";
       break;
     case 4:
       rendreExperiences();
+      loadFromLocalStorage();
       experiences.style.display = "block";
       break;
     case 5:
       rendreTemplateSelection();
+      loadFromLocalStorage();
       templateSelection.style.display = "block";
       downloadSection.style.display = 'block';
 
@@ -1170,6 +1228,12 @@ const Steps = () => {
       break;
   }
 };
+
+
+
+
+
+
 
 //-----------------function pour la validation---------------
 function validatePersonalInfo() {
@@ -1265,6 +1329,11 @@ function validateExperiences() {
 
   return true;
 }
+
+
+
+
+
 //---------localstorage-----------
 function saveToLocalStorage() {
   localStorage.setItem("cvData", JSON.stringify(userInformationCV));
@@ -1277,9 +1346,15 @@ function loadFromLocalStorage() {
     Object.assign(userInformationCV, parsed);
   }
 }
+//---------localstorage-----------
+function removeFromLocalStorage(){
+  localStorage.removeItem("cvData")
+}
+
+
 
 window.onload = () => {
-  loadFromLocalStorage();
+  removeFromLocalStorage();
   rendrePersonnelInfos();
   persInfos.style.display = "block";
 };
