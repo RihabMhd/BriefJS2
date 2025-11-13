@@ -272,13 +272,23 @@ const collectPersonalInfo = () => {
   }
 
   const photoInput = document.getElementById('photo');
-  if (photoInput?.files[0]) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      userInformationCV.photo = e.target.result;
-    };
-    reader.readAsDataURL(photoInput.files[0]);
-  }
+  const preview = document.getElementById('preview');
+
+  photoInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        preview.src = e.target.result;
+        userInformationCV.photo = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = '';
+      userInformationCV.photo = null;
+    }
+  });
+
 };
 //-----------------function pour le collect des donnees---------------
 const collectProfessionalInfo = () => {
@@ -402,6 +412,7 @@ const rendrePersonnelInfos = () => {
               <label class="block text-sm font-medium text-gray-700 mb-1">Photo de profil</label>
               <input type="file" id="photo" accept="image/*"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg cursor-pointer" />
+              <img id="preview" src="${userInformationCV.photo || ''}" alt="Your image will appear here" class="mt-2 max-h-40">
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
@@ -425,6 +436,24 @@ const rendrePersonnelInfos = () => {
           </form>
         </div>
       `;
+
+  const photoInput = document.getElementById('photo');
+  const preview = document.getElementById('preview');
+
+  photoInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        preview.src = e.target.result;           
+        userInformationCV.photo = e.target.result; 
+      };
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = '';
+      userInformationCV.photo = null;
+    }
+  });
 
   initQuillEditor();
 };
@@ -455,9 +484,6 @@ const rendreProfessionnelInfos = () => {
     </div>
   `;
 
-  // -----------------------
-  // Recharger les Hard Skills
-  // -----------------------
   const hardskillsContainer = document.getElementById('hardskillsContainer');
   hardskillsContainer.innerHTML = '';
 
@@ -473,9 +499,6 @@ const rendreProfessionnelInfos = () => {
     hardskillsContainer.appendChild(div);
   });
 
-  // -----------------------
-  // Recharger l'Éducation
-  // -----------------------
   const educationContainer = document.getElementById('educationContainer');
   educationContainer.innerHTML = '';
 
@@ -674,7 +697,7 @@ const rendreExperiences = () => {
     `;
     experienceContainer.appendChild(div);
   });
- 
+
   const certificationsContainer = document.getElementById('certificationsContainer');
   certificationsContainer.innerHTML = '';
 
@@ -703,7 +726,7 @@ const rendreExperiences = () => {
     `;
     certificationsContainer.appendChild(div);
   });
- 
+
   const projectsContainer = document.getElementById('projectsContainer');
   projectsContainer.innerHTML = '';
 
